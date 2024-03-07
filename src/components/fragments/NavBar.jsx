@@ -1,13 +1,12 @@
 import styled from "@emotion/styled";
 const Nav = styled.nav` 
-    margin-top:30px;
-    margin-right:10px;
-    border: black solid 2px;
+    border: gray solid 2px;
     border-radius: 10px;
-    grid-column-start: 3;
-    grid-column-end: 6;
-    grid-row-start: 1;
-    grid-row-end: 3;
+    max-height:50px;
+    width:79vw;
+    position: fixed;
+    right:20px;
+    grid-column:2 / 3;
 `
 const Div = styled.div`
     display:flex;
@@ -17,7 +16,7 @@ const Div = styled.div`
 const P = styled.p`
     padding:15px;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 15px;
     margin-right:20px;
 
 `
