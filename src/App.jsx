@@ -1,44 +1,135 @@
-import styled from '@emotion/styled'
-import NavBar from './components/fragments/NavBar'
-import SideBar from './components/fragments/SideBar'
-import MusicCard from './components/fragments/MusicCard'
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import {
+  ListenedSongsList,
+  ListenedSummary,
+} from "./components/listenedSongList";
+import { Loader } from "./components/Loader";
+import { NavBar, Search, NumResults } from "./components/navElements";
+import { SongList } from "./components/songList";
+import { SongDetails } from "./components/songDetails";
 
-const Container = styled.div`
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setIsLoading,
+  setQuery,
+  setSelectedId,
+  setListened,
+  fetchUserRequest,
+} from "./components/redux/actions";
 
-  display:grid;
-  grid-template-columns:20% 80%;
-  grid-template-rows: 100px 560px;
-  margin:5px;
-  
-`
-const Div = styled.div`
-  
-  padding:0px;
-  display:grid;
-  grid-gap:50px;
-  grid-template-columns: auto auto auto;
-  grid-template-row: 200px auto auto auto;
-  grid-column:2 / 3;
-  grid-row: 2 / 5;
-  max-height:600px;
-  overflow-y: auto;
+export default function App() {
+  const query = useSelector((state) => state.query);
+  const isLoading = useSelector((state) => state.isLoading);
+  const songs = useSelector((state) => state.songs);
+  const error = useSelector((state) => state.error);
+  const selectedId = useSelector((state) => state.selectedId);
+  const listened = useSelector((state) => state.listened);
+  const dispatch = useDispatch();
 
-`
-
-function App() {
-  const cards = [];
-  for (let i = 0; i < 10; i++) {
-      cards.push(<MusicCard key={i} />);
+  function handleSelectSong(id) {
+    dispatch(setSelectedId(id));
   }
+
+  function handleCloseSong() {
+    dispatch(setSelectedId(null));
+  }
+
+  function handleAddSong(song) {
+    const val = [...listened, song];
+    dispatch(setListened(val));
+  }
+
+  function handleDeleteSong(id) {
+    const arr = listened.filter((song) => song.id !== id);
+    dispatch(setListened(arr));
+  }
+
+  useEffect(
+    function () {
+      localStorage.setItem("listened", JSON.stringify(listened));
+    },
+    [listened]
+  );
+
+  useEffect(function () {
+    dispatch(fetchUserRequest());
+    dispatch(setIsLoading(false));
+  }, []);
+
   return (
-    <Container>
-      <SideBar />
-      <NavBar />
-      <Div>
-        {cards}
-      </Div>
-    </Container>
-  )
+    <>
+      <NavBar>
+        <Search query={query} setQuery={setQuery} />
+        <NumResults songs={songs} />
+      </NavBar>
+
+      <Main>
+        <Box>
+          {isLoading && <Loader />}
+          {!isLoading && !error && (
+            <SongList songs={songs} onSelectSong={handleSelectSong} />
+          )}
+          {error && <ErrorMessage message={error} />}
+        </Box>
+
+        <Box>
+          {selectedId ? (
+            <SongDetails
+              selectedId={selectedId}
+              onCloseSong={handleCloseSong}
+              onAddListened={handleAddSong}
+              listened={listened}
+            />
+          ) : (
+            <>
+              <ListenedSummary />
+              <ListenedSongsList
+                listened={listened}
+                onDeleteListened={handleDeleteSong}
+              />
+            </>
+          )}
+        </Box>
+      </Main>
+    </>
+  );
 }
 
-export default App
+function ErrorMessage({ message }) {
+  return (
+    <p className="error">
+      <span>⛔️</span> {message}
+    </p>
+  );
+}
+
+function Main({ children }) {
+  return <main className="main">{children}</main>;
+}
+
+function Box({ children }) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  return (
+    <div className="box">
+      <button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
+        {isOpen ? "–" : "+"}
+      </button>
+
+      {isOpen && children}
+    </div>
+  );
+}
+
+Main.propTypes = {
+  children: PropTypes.any,
+};
+
+Box.propTypes = {
+  children: PropTypes.any,
+};
+
+ErrorMessage.propTypes = {
+  message: PropTypes.any,
+};
