@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSongs } from "./redux/actions";
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
+import { setQueryData, setSongs } from "./redux/actions";
+import { PropTypes} from "prop-types"
 export function Form({ handleEdit }) {
   const dispatch = useDispatch();
   const songs = useSelector((state) => state.songs);
@@ -16,74 +15,53 @@ export function Form({ handleEdit }) {
     title: "",
     body: "",
   });
-  useEffect( function () {
-    setValue(selected[0])
-  },[])
-  const handleChange = (e) => {
+  useEffect(function () {
+    setValue(selected[0]);
+  }, []);
+  function handleChange(e) {
     setValue((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    console.log(value);
+
   };
   function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     const removed = songs.filter((song) => song.id !== selectedId);
-    removed.unshift(value); // Assuming newId and newName are the values you want to insert
+    removed.unshift(value);
     dispatch(setSongs(removed));
-    handleEdit()
+    dispatch(setQueryData(removed));
+    handleEdit();
   }
-  const Sform = styled.form`
-
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    
-    justify-content: center;
-    align-items: center;
-    margin-top:50px;
-  `
-  const Input = styled.input`
-    font-size:1.5rem;
-    width: 90%;
-    border-radius: 20px;
-    margin:20px;
-    padding:2rem;
-  `
-  const Label = styled.label`
-    height:100%;
-    font-size: 2rem;
-  `
-  const Button = styled.button`
-    width:50%;
-    padding:1.5rem;
-    border-radius: 2rem;
-    background-color:#d9c4e4;
-  `
+ 
   return (
     <>
-      <Sform>
-        <Label htmlFor="title">Title</Label>
-        <Input
+      <form className="formf">
+        <label htmlFor="title" className="labelf">Title</label>
+        <input
+          className="inputf"
           type="text"
           name="title"
-          id=""
+          id="title"
           value={value.title}
           onChange={handleChange}
-          
         />
-        <Label htmlFor="body">Body</Label>
-        <Input
+        <label htmlFor="body" className="labelf">Body</label>
+        <input
+          className="inputf"
           type="text"
           name="body"
-          id=""
+          id="body"
           value={value.body}
           onChange={handleChange}
         />
-        <Button type="submit" onClick={handleSubmit}>
+        <button className="btn-edit" type="submit" onClick={() => handleSubmit}>
           Edit
-        </Button>
-      </Sform>
+        </button >
+      </form>
     </>
   );
+}
+Form.propTypes = {
+  handleEdit: PropTypes.func
 }

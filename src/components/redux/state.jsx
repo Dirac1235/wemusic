@@ -1,5 +1,5 @@
 export const initialState = {
-  query: "",
+  queryData: [],
   songs: [],
   isLoading: false,
   error: false,

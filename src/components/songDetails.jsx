@@ -16,6 +16,7 @@ export function SongDetails({
   const [isLoading, setIsLoading] = useState(false);
   const [edit, setEdit] = useState(false)
   const isListened = listened.map((song) => song.id).includes(selectedId);
+
   const { userId, title, body } = song;
 
   function handleAdd() {
@@ -58,7 +59,7 @@ export function SongDetails({
   useEffect(
     function () {
       if (!title) return;
-      document.title = `Songs | ${title}`;
+      document.title = `songs | ${title}`;
 
       return function () {
         document.title = "Wemusic";

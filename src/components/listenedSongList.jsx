@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import img from "../assets/img.jpg"
+import img from "../assets/pink.webp"
 export function ListenedSongsList({ listened, onDeleteListened }) {
   listened = listened || [];
 

@@ -2,7 +2,7 @@ import {
   SetError,
   SetIsLoading,
   SetSong,
-  SetQuery,
+  SetQueryData,
   SetSelectedId,
   SetListened,
 } from "./actions";
@@ -35,10 +35,10 @@ export default function reduce(state = initialState, action) {
         ...state,
         songs: action.payload,
       };
-    case SetQuery:
+    case SetQueryData:
       return {
         ...state,
-        query: action.payload,
+        queryData: action.payload,
       };
     case SetListened:
       return {
@@ -55,6 +55,7 @@ export default function reduce(state = initialState, action) {
         ...state,
         isLoading: false,
         songs: action.songs,
+        queryData:action.songs,
         error: "",
       };
     case FETCH_USERS_FAILURE:

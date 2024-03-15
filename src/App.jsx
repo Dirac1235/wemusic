@@ -12,19 +12,18 @@ import { SongDetails } from "./components/songDetails";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setIsLoading,
-  setQuery,
   setSelectedId,
   setListened,
   fetchUserRequest,
 } from "./components/redux/actions";
 
 export default function App() {
-  const query = useSelector((state) => state.query);
   const isLoading = useSelector((state) => state.isLoading);
   const songs = useSelector((state) => state.songs);
   const error = useSelector((state) => state.error);
   const selectedId = useSelector((state) => state.selectedId);
   const listened = useSelector((state) => state.listened);
+  const queryData = useSelector((state) => state.queryData)
   const dispatch = useDispatch();
 
   function handleSelectSong(id) {
@@ -60,15 +59,15 @@ export default function App() {
   return (
     <>
       <NavBar>
-        <Search query={query} setQuery={setQuery} />
-        <NumResults songs={songs} />
+        <Search songs={songs}/>
+        <NumResults queryData={queryData} />
       </NavBar>
 
       <Main>
         <Box>
           {isLoading && <Loader />}
           {!isLoading && !error && (
-            <SongList songs={songs} onSelectSong={handleSelectSong} />
+            <SongList queryData={queryData} onSelectSong={handleSelectSong} />
           )}
           {error && <ErrorMessage message={error} />}
         </Box>

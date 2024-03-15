@@ -3,15 +3,15 @@ export const SetSong = "setSong";
 export const SetIsLoading = "setIsLoading";
 export const SetError = "setError";
 export const SetSelectedId = "setSelectedId";
-export const SetQuery = "setQuery";
+export const SetQueryData = "setQueryData";
 
 export const FETCH_USERS_REQUEST = "FETCH_USERS_REQUEST";
 export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
 export const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
 
 
-export const setQuery = (value) => ({
-  type: SetQuery,
+export const setQueryData = (value) => ({
+  type: SetQueryData,
   payload: value,
 });
 export const setListened = (value) => ({

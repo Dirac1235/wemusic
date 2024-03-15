@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import img from "../assets/img.jpg"
-export function SongList({ songs, onSelectSong }) {
+import img from "../assets/pink.webp"
+export function SongList({ queryData, onSelectSong }) {
   return (
-    <ul className="list list-songs">
-      {songs?.map((song) => (
+    <ul className="list list-queryData">
+      {queryData?.map((song) => (
         <Song song={song} key={song.id} onSelectSong={onSelectSong} />
       ))}
     </ul>
@@ -30,6 +30,6 @@ Song.propTypes = {
 };
 
 SongList.propTypes = {
-  songs: PropTypes.array,
+  queryData: PropTypes.array,
   onSelectSong: PropTypes.func,
 };
