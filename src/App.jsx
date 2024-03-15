@@ -16,6 +16,7 @@ import {
   setListened,
   fetchUserRequest,
 } from "./components/redux/actions";
+import styled from "@emotion/styled";
 
 export default function App() {
   const isLoading = useSelector((state) => state.isLoading);
@@ -23,7 +24,7 @@ export default function App() {
   const error = useSelector((state) => state.error);
   const selectedId = useSelector((state) => state.selectedId);
   const listened = useSelector((state) => state.listened);
-  const queryData = useSelector((state) => state.queryData)
+  const queryData = useSelector((state) => state.queryData);
   const dispatch = useDispatch();
 
   function handleSelectSong(id) {
@@ -59,7 +60,7 @@ export default function App() {
   return (
     <>
       <NavBar>
-        <Search songs={songs}/>
+        <Search songs={songs} />
         <NumResults queryData={queryData} />
       </NavBar>
 
@@ -103,8 +104,16 @@ function ErrorMessage({ message }) {
   );
 }
 
+const MainS = styled.main`
+  margin-top: 2.4rem;
+  height: calc(100vh - 7.2rem - 3 * 2.4rem);
+  display: flex;
+  gap: 2.4rem;
+  justify-content: center;
+`;
+
 function Main({ children }) {
-  return <main className="main">{children}</main>;
+  return <MainS >{children}</MainS>;
 }
 
 function Box({ children }) {

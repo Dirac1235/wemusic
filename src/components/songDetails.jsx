@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Form } from "./form";
 import { Loader } from "./Loader";
 import { useSelector } from "react-redux";
+import styled from "@emotion/styled";
 export function SongDetails({
   selectedId,
   onCloseSong,
@@ -10,11 +11,11 @@ export function SongDetails({
   listened,
 }) {
   const songs = useSelector((state) => state.songs);
-  
+
   listened = listened || [];
   const [song, setSong] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [edit, setEdit] = useState(false)
+  const [edit, setEdit] = useState(false);
   const isListened = listened.map((song) => song.id).includes(selectedId);
 
   const { userId, title, body } = song;
@@ -26,11 +27,13 @@ export function SongDetails({
       title,
       body,
     };
-    console.log(newListenedSong)
+    console.log(newListenedSong);
     isListened ? {} : onAddListened(newListenedSong);
     onCloseSong();
   }
-
+  function handleEdit() {
+    setEdit((prev) => !prev)
+  }
   useEffect(
     function () {
       function callback(e) {
@@ -46,12 +49,11 @@ export function SongDetails({
     },
     [onCloseSong]
   );
-  
+
   useEffect(
     function () {
       const selected = songs.filter((song) => song.id == selectedId);
-      setSong(selected[0])
-     
+      setSong(selected[0]);
     },
     [selectedId, songs]
   );
@@ -63,14 +65,35 @@ export function SongDetails({
 
       return function () {
         document.title = "Wemusic";
-        
       };
     },
     [title]
   );
-
+  const DetailsDiv = styled.div`
+    line-height: 1.4;
+    font-size: 1.4rem;
+  `;
+  const DetailsSection = styled.header`
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  `;
+  const DetailsOverview = styled.div`
+    width: 100%;
+    padding: 2.4rem 3rem;
+    background-color: var(--color-background-100);
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  `;
+  const DetailsOverviewH = styled.h2`
+    font-size: 2.4rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.1;
+  `;
   return (
-    <div className="details">
+    <DetailsDiv >
       {isLoading ? (
         <Loader />
       ) : !edit ? (
@@ -79,26 +102,29 @@ export function SongDetails({
             <button className="btn-back" onClick={onCloseSong}>
               &larr;
             </button>
-            
-            <div className="details-overview">
-              <h2>{title}</h2>
-            </div>
+
+            <DetailsOverview className="details-overview">
+              <DetailsOverviewH>{title}</DetailsOverviewH>
+            </DetailsOverview>
           </header>
 
-         
-
-          <section>
+          <DetailsSection>
             <p>{body}</p>
-            <button className="btn-add" onClick={() => setEdit((prev) => !prev)}>
+            <button
+              className="btn-add"
+              onClick={() => setEdit((prev) => !prev)}
+            >
               Edit
             </button>
             <button className="btn-add" onClick={handleAdd}>
               + Add to list
             </button>
-          </section>
+          </DetailsSection>
         </>
-      ) : ( <Form handleEdit={() => setEdit((prev) => !prev)}/>)}
-    </div>
+      ) : (
+        <Form onCloseSong={handleEdit} handleEdit={() => setEdit((prev) => !prev)} />
+      )}
+    </DetailsDiv>
   );
 }
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setQueryData, setSongs } from "./redux/actions";
-import { PropTypes} from "prop-types"
-export function Form({ handleEdit }) {
+import { PropTypes } from "prop-types";
+export function Form({ handleEdit, onCloseSong }) {
   const dispatch = useDispatch();
   const songs = useSelector((state) => state.songs);
   const selectedId = useSelector((state) => state.selectedId);
@@ -23,8 +23,7 @@ export function Form({ handleEdit }) {
       ...prev,
       [e.target.name]: e.target.value,
     }));
-
-  };
+  }
   function handleSubmit(e) {
     e.preventDefault();
     const removed = songs.filter((song) => song.id !== selectedId);
@@ -33,11 +32,16 @@ export function Form({ handleEdit }) {
     dispatch(setQueryData(removed));
     handleEdit();
   }
- 
+
   return (
     <>
+      <button className="btn-back" onClick={onCloseSong}>
+              &larr;
+            </button>
       <form className="formf">
-        <label htmlFor="title" className="labelf">Title</label>
+        <label htmlFor="title" className="labelf">
+          Title
+        </label>
         <input
           className="inputf"
           type="text"
@@ -46,7 +50,9 @@ export function Form({ handleEdit }) {
           value={value.title}
           onChange={handleChange}
         />
-        <label htmlFor="body" className="labelf">Body</label>
+        <label htmlFor="body" className="labelf">
+          Body
+        </label>
         <input
           className="inputf"
           type="text"
@@ -55,13 +61,13 @@ export function Form({ handleEdit }) {
           value={value.body}
           onChange={handleChange}
         />
-        <button className="btn-edit" type="submit" onClick={() => handleSubmit}>
+        <button className="btn-edit" type="submit" onClick={handleSubmit}>
           Edit
-        </button >
+        </button>
       </form>
     </>
   );
 }
 Form.propTypes = {
-  handleEdit: PropTypes.func
-}
+  handleEdit: PropTypes.func,
+};

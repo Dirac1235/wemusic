@@ -1,23 +1,44 @@
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { setSongs } from "./redux/actions";
+import { useDispatch } from "react-redux";
 import { setQueryData } from "./redux/actions";
+import styled from "@emotion/styled";
+const Nav = styled.nav`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  height: 7.2rem;
+  padding: 0 3.2rem;
+  background-color: var(--color-primary);
+  border-radius: 0.9rem;
+`;
 export function NavBar({ children }) {
   return (
-    <nav className="nav-bar">
+    <Nav className="nav-bar">
       <Logo />
       {children}
-    </nav>
+    </Nav>
   );
 }
-
+const LogoDiv = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+`;
+const LogoSpan = styled.span`
+  font-size: 3.2rem;
+`;
+const LogoH = styled.h1`
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #fff;
+`;
 export function Logo() {
   return (
-    <div className="logo">
-      <span role="img">🎵</span>
-      <h1>Wemusic</h1>
-    </div>
+    <LogoDiv>
+      <LogoSpan role="img">🎵</LogoSpan>
+      <LogoH>Wemusic</LogoH>
+    </LogoDiv>
   );
 }
 
@@ -27,8 +48,8 @@ export function Search({ songs }) {
   const holderRef = useRef([...songs]);
   const [query, setQuery] = useState({
     title: "",
-  })
-  
+  });
+
   useEffect(
     function () {
       function callback(e) {
@@ -40,9 +61,11 @@ export function Search({ songs }) {
         }
       }
       console.log(holderRef.current);
-      
+
       const filteredSongs = songs.filter((song) => song.title === query);
-      query ? dispatch(setQueryData(filteredSongs)) : dispatch(setQueryData(songs));
+      query
+        ? dispatch(setQueryData(filteredSongs))
+        : dispatch(setQueryData(songs));
       document.addEventListener("keydown", callback);
       return () => document.addEventListener("keydown", callback);
     },
@@ -60,13 +83,16 @@ export function Search({ songs }) {
     />
   );
 }
-
+const NumResultsP = styled.p`
+justify-self: end;
+font-size: 1.8rem;
+`
 export function NumResults({ queryData }) {
   queryData = queryData || [];
   return (
-    <p className="num-results">
+    <NumResultsP >
       Found <strong>{queryData.length}</strong> results
-    </p>
+    </NumResultsP>
   );
 }
 
