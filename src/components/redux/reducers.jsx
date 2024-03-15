@@ -63,7 +63,7 @@ export default function reduce(state = initialState, action) {
         ...state,
         isLoading: false,
         songs: [],
-        error: action.payload,
+        error: action.message,
       };
     default:
       return state;

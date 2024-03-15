@@ -1,7 +1,7 @@
 export const initialState = {
   queryData: [],
   songs: [],
-  isLoading: false,
+  isLoading: true,
   error: false,
   selectedId: null,
   listened: [],

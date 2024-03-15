@@ -1,25 +1,13 @@
 import PropTypes from "prop-types";
-import img from "../assets/pink.webp";
-import styled from "@emotion/styled";
-const SummaryDiv = styled.div`
-  padding: 2.2rem 3.2rem 1.8rem 3.2rem;
-  border-radius: 0.9rem;
-  background-color: var(--color-background-100);
-  box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-  gap: 2.4rem;
-  font-size: 1.6rem;
-  font-weight: 600;
-`;
-const SummaryH = styled.h2`
-  text-transform: uppercase;
-  font-size: 1.6rem;
-  margin-bottom: 0.6rem;
-`;
+import img from "../../images/pink.webp";
+import { useDispatch, useSelector } from "react-redux";
+import { SongDetails } from "./songDetails";
+import { setSelectedId } from "./redux/actions";
+import { SummaryDiv, SummaryH } from "./emotionStyle/emotionStyle";
 
-export function ListenedSongsList({ listened, onDeleteListened }) {
-  listened = listened || [];
+export function ListenedSongsList({ onDeleteListened, onCloseSong, onAddListened }) {
+  const listened = useSelector((state) => state.listened)
+  
 
   return (
     <ul className="list">
@@ -28,15 +16,26 @@ export function ListenedSongsList({ listened, onDeleteListened }) {
           song={song}
           key={song.id}
           onDeleteListened={onDeleteListened}
+          onCloseSong={onCloseSong}
+          onAddListened={onAddListened}
+          listened={listened}
         />
       ))}
     </ul>
   );
 }
 
-function ListenedSong({ song, onDeleteListened }) {
-  return (
-    <li>
+function ListenedSong({
+  song,
+  onDeleteListened,
+  onAddListened,
+  onCloseSong,
+  listened,
+}) {
+  const selectedId = useSelector((state) => state.selectedId);
+  const dispatch = useDispatch();
+  return !selectedId ? (
+    <li onClick={() => dispatch(setSelectedId(song.id))}>
       <button className="btn-delete" onClick={() => onDeleteListened(song.id)}>
         X
       </button>
@@ -48,6 +47,13 @@ function ListenedSong({ song, onDeleteListened }) {
         </p>
       </div>
     </li>
+  ) : (
+    <SongDetails
+      selectedId={selectedId}
+      onCloseSong={onCloseSong}
+      onAddListened={onAddListened}
+      listened={listened}
+    />
   );
 }
 
@@ -62,8 +68,14 @@ export function ListenedSummary() {
 ListenedSongsList.propTypes = {
   listened: PropTypes.array,
   onDeleteListened: PropTypes.func,
+  
+  onAddListened: PropTypes.func,
+  onCloseSong: PropTypes.func
 };
 ListenedSong.propTypes = {
   song: PropTypes.object,
   onDeleteListened: PropTypes.func,
+  listened: PropTypes.array,
+  onAddListened: PropTypes.func,
+  onCloseSong: PropTypes.func
 };

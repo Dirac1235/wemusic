@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setQueryData, setSongs } from "./redux/actions";
+import { setListened, setQueryData, setSongs } from "./redux/actions";
 import { PropTypes } from "prop-types";
 export function Form({ handleEdit, onCloseSong }) {
   const dispatch = useDispatch();
   const songs = useSelector((state) => state.songs);
+  const listened = useSelector((state) => state.listened);
+
   const selectedId = useSelector((state) => state.selectedId);
 
   const selected = songs.filter((song) => song.id == selectedId);
@@ -26,10 +28,15 @@ export function Form({ handleEdit, onCloseSong }) {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    const removed = songs.filter((song) => song.id !== selectedId);
-    removed.unshift(value);
-    dispatch(setSongs(removed));
-    dispatch(setQueryData(removed));
+    const modified = songs.filter((song) => song.id !== selectedId);
+    const modifiedlistned = listened.filter((song) => song.id !== selectedId);
+
+    modified.unshift(value);
+    modifiedlistned.unshift(value);
+
+    dispatch(setSongs(modified));
+    dispatch(setQueryData(modified));
+    dispatch(setListened(modifiedlistned))
     handleEdit();
   }
 
@@ -70,4 +77,5 @@ export function Form({ handleEdit, onCloseSong }) {
 }
 Form.propTypes = {
   handleEdit: PropTypes.func,
+  onCloseSong: PropTypes.func
 };

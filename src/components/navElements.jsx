@@ -2,16 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setQueryData } from "./redux/actions";
-import styled from "@emotion/styled";
-const Nav = styled.nav`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  height: 7.2rem;
-  padding: 0 3.2rem;
-  background-color: var(--color-primary);
-  border-radius: 0.9rem;
-`;
+import { NumResultsP, LogoDiv, LogoSpan, LogoH, Nav } from "./emotionStyle/emotionStyle";
+
 export function NavBar({ children }) {
   return (
     <Nav className="nav-bar">
@@ -20,19 +12,7 @@ export function NavBar({ children }) {
     </Nav>
   );
 }
-const LogoDiv = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-`;
-const LogoSpan = styled.span`
-  font-size: 3.2rem;
-`;
-const LogoH = styled.h1`
-  font-size: 2.4rem;
-  font-weight: 600;
-  color: #fff;
-`;
+
 export function Logo() {
   return (
     <LogoDiv>
@@ -83,10 +63,7 @@ export function Search({ songs }) {
     />
   );
 }
-const NumResultsP = styled.p`
-justify-self: end;
-font-size: 1.8rem;
-`
+
 export function NumResults({ queryData }) {
   queryData = queryData || [];
   return (

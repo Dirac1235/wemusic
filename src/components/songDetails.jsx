@@ -3,7 +3,12 @@ import PropTypes from "prop-types";
 import { Form } from "./form";
 import { Loader } from "./Loader";
 import { useSelector } from "react-redux";
-import styled from "@emotion/styled";
+import {
+  DetailsOverview,
+  DetailsOverviewH,
+  DetailsSection,
+  DetailsDiv,
+} from "./emotionStyle/emotionStyle";
 export function SongDetails({
   selectedId,
   onCloseSong,
@@ -32,7 +37,7 @@ export function SongDetails({
     onCloseSong();
   }
   function handleEdit() {
-    setEdit((prev) => !prev)
+    setEdit((prev) => !prev);
   }
   useEffect(
     function () {
@@ -69,31 +74,9 @@ export function SongDetails({
     },
     [title]
   );
-  const DetailsDiv = styled.div`
-    line-height: 1.4;
-    font-size: 1.4rem;
-  `;
-  const DetailsSection = styled.header`
-    padding: 4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-  `;
-  const DetailsOverview = styled.div`
-    width: 100%;
-    padding: 2.4rem 3rem;
-    background-color: var(--color-background-100);
-    display: flex;
-    flex-direction: column;
-    gap: 1.4rem;
-  `;
-  const DetailsOverviewH = styled.h2`
-    font-size: 2.4rem;
-    margin-bottom: 0.4rem;
-    line-height: 1.1;
-  `;
+
   return (
-    <DetailsDiv >
+    <DetailsDiv>
       {isLoading ? (
         <Loader />
       ) : !edit ? (
@@ -116,13 +99,18 @@ export function SongDetails({
             >
               Edit
             </button>
-            <button className="btn-add" onClick={handleAdd}>
-              + Add to list
-            </button>
+            {!isListened && (
+              <button className="btn-add" onClick={handleAdd}>
+                + Add to list
+              </button>
+            )}
           </DetailsSection>
         </>
       ) : (
-        <Form onCloseSong={handleEdit} handleEdit={() => setEdit((prev) => !prev)} />
+        <Form
+          onCloseSong={handleEdit}
+          handleEdit={() => setEdit((prev) => !prev)}
+        />
       )}
     </DetailsDiv>
   );

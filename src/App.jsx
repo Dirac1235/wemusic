@@ -85,8 +85,9 @@ export default function App() {
             <>
               <ListenedSummary />
               <ListenedSongsList
-                listened={listened}
                 onDeleteListened={handleDeleteSong}
+                onCloseSong={handleCloseSong}
+                onAddListened={handleAddSong}
               />
             </>
           )}
@@ -113,7 +114,7 @@ const MainS = styled.main`
 `;
 
 function Main({ children }) {
-  return <MainS >{children}</MainS>;
+  return <MainS>{children}</MainS>;
 }
 
 function Box({ children }) {

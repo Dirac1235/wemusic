@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import img from "../assets/pink.webp"
+import img from "../../images/pink.webp"
 export function SongList({ queryData, onSelectSong }) {
   return (
     <ul className="list list-queryData">
