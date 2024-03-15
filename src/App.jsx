@@ -17,6 +17,7 @@ import {
   fetchUserRequest,
 } from "./components/redux/actions";
 import styled from "@emotion/styled";
+import { NotFound } from "./components/notFound";
 
 export default function App() {
   const isLoading = useSelector((state) => state.isLoading);
@@ -66,11 +67,22 @@ export default function App() {
 
       <Main>
         <Box>
-          {isLoading && <Loader />}
-          {!isLoading && !error && (
-            <SongList queryData={queryData} onSelectSong={handleSelectSong} />
+          {!isLoading ? (
+            !error ? (
+              queryData && queryData.length > 0 ? (
+                <SongList
+                  queryData={queryData}
+                  onSelectSong={handleSelectSong}
+                />
+              ) : (
+                <NotFound />
+              )
+            ) : (
+              <ErrorMessage message={error} />
+            )
+          ) : (
+            <Loader />
           )}
-          {error && <ErrorMessage message={error} />}
         </Box>
 
         <Box>
@@ -120,15 +132,7 @@ function Main({ children }) {
 function Box({ children }) {
   const [isOpen, setIsOpen] = useState(true);
 
-  return (
-    <div className="box">
-      <button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
-        {isOpen ? "–" : "+"}
-      </button>
-
-      {isOpen && children}
-    </div>
-  );
+  return <div className="box">{children}</div>;
 }
 
 Main.propTypes = {

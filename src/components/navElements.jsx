@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setQueryData } from "./redux/actions";
@@ -23,31 +23,20 @@ export function Logo() {
 }
 
 export function Search({ songs }) {
-  const inputEl = useRef(null);
   const dispatch = useDispatch();
-  const holderRef = useRef([...songs]);
   const [query, setQuery] = useState({
     title: "",
   });
 
   useEffect(
     function () {
-      function callback(e) {
-        if (document.activeElement === inputEl.current) return;
-
-        if (e.code === "Enter") {
-          inputEl.current.focus();
-          dispatch(setQuery(""));
-        }
-      }
-      console.log(holderRef.current);
-
+      
+      
       const filteredSongs = songs.filter((song) => song.title === query);
       query
         ? dispatch(setQueryData(filteredSongs))
         : dispatch(setQueryData(songs));
-      document.addEventListener("keydown", callback);
-      return () => document.addEventListener("keydown", callback);
+      
     },
     [query]
   );
@@ -58,8 +47,7 @@ export function Search({ songs }) {
       type="text"
       placeholder="Search songs..."
       value={query.title}
-      onChange={(e) => dispatch(setQuery(e.target.value))}
-      ref={inputEl}
+      onChange={(e) => setQuery(e.target.value)}
     />
   );
 }

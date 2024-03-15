@@ -5,9 +5,12 @@ import { SongDetails } from "./songDetails";
 import { setSelectedId } from "./redux/actions";
 import { SummaryDiv, SummaryH } from "./emotionStyle/emotionStyle";
 
-export function ListenedSongsList({ onDeleteListened, onCloseSong, onAddListened }) {
-  const listened = useSelector((state) => state.listened)
-  
+export function ListenedSongsList({
+  onDeleteListened,
+  onCloseSong,
+  onAddListened,
+}) {
+  const listened = useSelector((state) => state.listened);
 
   return (
     <ul className="list">
@@ -35,13 +38,13 @@ function ListenedSong({
   const selectedId = useSelector((state) => state.selectedId);
   const dispatch = useDispatch();
   return !selectedId ? (
-    <li onClick={() => dispatch(setSelectedId(song.id))}>
+    <li>
       <button className="btn-delete" onClick={() => onDeleteListened(song.id)}>
         X
       </button>
       <img src={img} alt={`${song.title} poster`} />
-      <h3>{song.title}</h3>
-      <div>
+      <h3 onClick={() => dispatch(setSelectedId(song.id))}>{song.title}</h3>
+      <div onClick={() => dispatch(setSelectedId(song.id))}>
         <p>
           <span>{song.body}</span>
         </p>
@@ -68,14 +71,14 @@ export function ListenedSummary() {
 ListenedSongsList.propTypes = {
   listened: PropTypes.array,
   onDeleteListened: PropTypes.func,
-  
+
   onAddListened: PropTypes.func,
-  onCloseSong: PropTypes.func
+  onCloseSong: PropTypes.func,
 };
 ListenedSong.propTypes = {
   song: PropTypes.object,
   onDeleteListened: PropTypes.func,
   listened: PropTypes.array,
   onAddListened: PropTypes.func,
-  onCloseSong: PropTypes.func
+  onCloseSong: PropTypes.func,
 };

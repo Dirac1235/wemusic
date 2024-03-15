@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Form } from "./form";
-import { Loader } from "./Loader";
 import { useSelector } from "react-redux";
 import {
   DetailsOverview,
@@ -19,7 +18,6 @@ export function SongDetails({
 
   listened = listened || [];
   const [song, setSong] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const isListened = listened.map((song) => song.id).includes(selectedId);
 
@@ -77,9 +75,7 @@ export function SongDetails({
 
   return (
     <DetailsDiv>
-      {isLoading ? (
-        <Loader />
-      ) : !edit ? (
+      {!edit ? (
         <>
           <header>
             <button className="btn-back" onClick={onCloseSong}>

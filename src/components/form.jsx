@@ -9,7 +9,7 @@ export function Form({ handleEdit, onCloseSong }) {
 
   const selectedId = useSelector((state) => state.selectedId);
 
-  const selected = songs.filter((song) => song.id == selectedId);
+  const selected = songs.filter((song) => song.id == selectedId)[0];
   console.log(selected);
   const [value, setValue] = useState({
     userId: "",
@@ -18,8 +18,8 @@ export function Form({ handleEdit, onCloseSong }) {
     body: "",
   });
   useEffect(function () {
-    setValue(selected[0]);
-  }, []);
+    setValue(selected);
+  }, [selected]);
   function handleChange(e) {
     setValue((prev) => ({
       ...prev,
@@ -29,6 +29,7 @@ export function Form({ handleEdit, onCloseSong }) {
   function handleSubmit(e) {
     e.preventDefault();
     const modified = songs.filter((song) => song.id !== selectedId);
+    const isListened = listened.map((song) => song.id).includes(selectedId);
     const modifiedlistned = listened.filter((song) => song.id !== selectedId);
 
     modified.unshift(value);
@@ -36,7 +37,7 @@ export function Form({ handleEdit, onCloseSong }) {
 
     dispatch(setSongs(modified));
     dispatch(setQueryData(modified));
-    dispatch(setListened(modifiedlistned))
+    isListened && dispatch(setListened(modifiedlistned))
     handleEdit();
   }
 

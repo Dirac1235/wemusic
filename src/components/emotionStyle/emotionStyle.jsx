@@ -21,6 +21,7 @@ export const DetailsOverview = styled.div`
 export const DetailsOverviewH = styled.h2`
   font-size: 2.4rem;
   margin-bottom: 0.4rem;
+  margin-left:1.5rem;
   line-height: 1.1;
 `;
 export const LoaderP = styled.p`
@@ -72,3 +73,9 @@ export const Nav = styled.nav`
   background-color: var(--color-primary);
   border-radius: 0.9rem;
 `;
+export const NotFoundH = styled.p`
+font-size:2rem;
+text-align:center;
+margin-top:10%
+
+`
