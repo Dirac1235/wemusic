@@ -62,7 +62,7 @@ function ListenedSong({
 
 export function ListenedSummary() {
   return (
-    <SummaryDiv className="summary">
+    <SummaryDiv >
       <SummaryH>Songs you have listened</SummaryH>
     </SummaryDiv>
   );

@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { setQueryData } from "./redux/actions";
-import { NumResultsP, LogoDiv, LogoSpan, LogoH, Nav } from "./emotionStyle/emotionStyle";
+import {
+  NumResultsP,
+  LogoDiv,
+  LogoSpan,
+  LogoH,
+  Nav,
+} from "./emotionStyle/emotionStyle";
 
 export function NavBar({ children }) {
   return (
@@ -30,13 +36,14 @@ export function Search({ songs }) {
 
   useEffect(
     function () {
-      
-      
-      const filteredSongs = songs.filter((song) => song.title === query);
+      const searchTerm = query.title.toLowerCase();
+      const filteredSongs = songs.filter((song) => {
+        const itemName = song.title.toLowerCase();
+        return itemName.startsWith(searchTerm);
+      });
       query
         ? dispatch(setQueryData(filteredSongs))
         : dispatch(setQueryData(songs));
-      
     },
     [query]
   );
@@ -47,7 +54,7 @@ export function Search({ songs }) {
       type="text"
       placeholder="Search songs..."
       value={query.title}
-      onChange={(e) => setQuery(e.target.value)}
+      onChange={(e) => setQuery({title:e.target.value})}
     />
   );
 }
@@ -55,7 +62,7 @@ export function Search({ songs }) {
 export function NumResults({ queryData }) {
   queryData = queryData || [];
   return (
-    <NumResultsP >
+    <NumResultsP>
       Found <strong>{queryData.length}</strong> results
     </NumResultsP>
   );

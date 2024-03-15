@@ -18,6 +18,7 @@ import {
 } from "./components/redux/actions";
 import styled from "@emotion/styled";
 import { NotFound } from "./components/notFound";
+import { SummaryDiv, SummaryH } from "./components/emotionStyle/emotionStyle";
 
 export default function App() {
   const isLoading = useSelector((state) => state.isLoading);
@@ -67,6 +68,7 @@ export default function App() {
 
       <Main>
         <Box>
+      
           {!isLoading ? (
             !error ? (
               queryData && queryData.length > 0 ? (
