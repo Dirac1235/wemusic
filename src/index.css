@@ -210,10 +210,15 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-
+  max-width: 500px;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin: auto;
+  margin-top: 20px;
+}
+.formf h1 {
+  margin-bottom: 20px;
+  font-size: 30px;
 }
 .inputf {
   font-size: 1.5rem;
@@ -239,9 +244,6 @@ body {
 }
 /* music player stylings */
 
-
-
-
 /* #boxes {
   display: grid;
   grid-template-columns: max-content max-content;
@@ -253,7 +255,6 @@ body {
   height: 100vh;
 } */
 
-
 #player02 {
   grid-area: B;
   height: fit-content;
@@ -263,7 +264,6 @@ body {
   display: flex;
   justify-content: space-around;
 }
-
 
 .player {
   background-color: #c56ad1;
@@ -343,4 +343,3 @@ body {
     padding-block: 60px;
   }
 }
-
