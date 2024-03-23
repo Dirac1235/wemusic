@@ -12,20 +12,38 @@ export function Form({ handleEdit, onCloseSong }) {
   const selected = songs.filter((song) => song.id == selectedId)[0];
   console.log(selected);
   const [value, setValue] = useState({
-    userId: "",
     id: "",
     title: "",
-    body: "",
+    preview:"",
+    artist:{
+      name:""
+    }, 
+    album:{
+      cover:""
+    }
   });
   useEffect(function () {
     setValue(selected);
   }, [selected]);
-  function handleChange(e) {
-    setValue((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const [parent, child] = name.split('.');
+
+    if (child) {
+      setValue(prevState => ({
+        ...prevState,
+        [parent]: {
+          ...prevState[parent],
+          [child]: value
+        }
+      }));
+    } else {
+      setValue(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
+  };
   function handleSubmit(e) {
     e.preventDefault();
     const modified = songs.filter((song) => song.id !== selectedId);
@@ -59,14 +77,36 @@ export function Form({ handleEdit, onCloseSong }) {
           onChange={handleChange}
         />
         <label htmlFor="body" className="labelf">
-          Body
+          Artist Name
+        </label>
+        <input
+          className="inputf"
+          type="text"
+          name="artist.name"
+          id="body"
+          value={value.artist.name}
+          onChange={handleChange}
+        />
+         <label htmlFor="body" className="labelf">
+          Image Url
+        </label>
+        <input
+          className="inputf"
+          type="text"
+          name="album.cover"
+          id="body"
+          value={value.album.cover}
+          onChange={handleChange}
+        />
+         <label htmlFor="body" className="labelf">
+          Song Url
         </label>
         <input
           className="inputf"
           type="text"
           name="body"
           id="body"
-          value={value.body}
+          value={value.preview}
           onChange={handleChange}
         />
         <button className="btn-edit" type="submit" onClick={handleSubmit}>

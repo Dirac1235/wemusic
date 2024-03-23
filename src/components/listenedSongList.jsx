@@ -42,11 +42,11 @@ function ListenedSong({
       <button className="btn-delete" onClick={() => onDeleteListened(song.id)}>
         X
       </button>
-      <img src={img} alt={`${song.title} poster`} />
+      <img src={song?.album?.cover} alt={`${song.title} poster`} />
       <h3 onClick={() => dispatch(setSelectedId(song.id))}>{song.title}</h3>
       <div onClick={() => dispatch(setSelectedId(song.id))}>
         <p>
-          <span>{song.body}</span>
+          <span>{song.artist.name}</span>
         </p>
       </div>
     </li>
@@ -62,7 +62,7 @@ function ListenedSong({
 
 export function ListenedSummary() {
   return (
-    <SummaryDiv >
+    <SummaryDiv>
       <SummaryH>Songs you have listened</SummaryH>
     </SummaryDiv>
   );

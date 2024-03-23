@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Form } from "./form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   DetailsOverview,
-  DetailsOverviewH,
   DetailsSection,
   DetailsDiv,
 } from "./emotionStyle/emotionStyle";
+import MusicPlayer from "./musicPlayer";
+import { setSelectedId } from "./redux/actions";
 export function SongDetails({
   selectedId,
   onCloseSong,
@@ -15,21 +16,32 @@ export function SongDetails({
   listened,
 }) {
   const songs = useSelector((state) => state.songs);
-
+  const dispatch = useDispatch();
   listened = listened || [];
   const [song, setSong] = useState({});
   const [edit, setEdit] = useState(false);
   const isListened = listened.map((song) => song.id).includes(selectedId);
 
-  const { userId, title, body } = song;
+  function handleNextClick() {
+    const newId = getIndexById(songs, selectedId);
+    dispatch(setSelectedId(songs[newId + 1].id));
+}
+
+function handlePrevClick() {
+    const newId = getIndexById(songs, selectedId);
+    dispatch(setSelectedId(songs[newId - 1].id));
+}
+  function getIndexById(array, id) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].id === id) {
+        return i; // Return index if id matches
+      }
+    }
+    return -1; // Return -1 if id is not found
+  }
 
   function handleAdd() {
-    const newListenedSong = {
-      userId,
-      id: selectedId,
-      title,
-      body,
-    };
+    const newListenedSong = song;
     console.log(newListenedSong);
     isListened ? {} : onAddListened(newListenedSong);
     onCloseSong();
@@ -61,18 +73,6 @@ export function SongDetails({
     [selectedId, songs]
   );
 
-  useEffect(
-    function () {
-      if (!title) return;
-      document.title = `songs | ${title}`;
-
-      return function () {
-        document.title = "Wemusic";
-      };
-    },
-    [title]
-  );
-
   return (
     <DetailsDiv>
       {!edit ? (
@@ -82,13 +82,11 @@ export function SongDetails({
               &larr;
             </button>
 
-            <DetailsOverview className="details-overview">
-              <DetailsOverviewH>{title}</DetailsOverviewH>
-            </DetailsOverview>
+            <DetailsOverview className="details-overview"></DetailsOverview>
           </header>
 
           <DetailsSection>
-            <p>{body}</p>
+            <MusicPlayer song={song} onNextClick={handleNextClick} onPrevClick={handlePrevClick} />
             <button
               className="btn-add"
               onClick={() => setEdit((prev) => !prev)}
