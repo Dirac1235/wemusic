@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setListened, setQueryData, setSongs } from "./redux/actions";
+import { setQueryData, setSongs } from "./redux/actions";
 import { PropTypes } from "prop-types";
-export function Form({ handleEdit, onCloseSong }) {
+import { Navigate } from "react-router-dom";
+import { useState } from "react";
+export function CreateForm() {
   const dispatch = useDispatch();
   const songs = useSelector((state) => state.songs);
-  const listened = useSelector((state) => state.listened);
-  const selectedId = useSelector((state) => state.selectedId);
 
-  const selected = songs.filter((song) => song.id == selectedId)[0];
+  const [redirectit, setRedirect] = useState(false);
 
   const [value, setValue] = useState({
     id: "",
@@ -21,14 +20,7 @@ export function Form({ handleEdit, onCloseSong }) {
       cover: "",
     },
   });
-  useEffect(
-    function () {
-      if (selected) {
-        setValue(selected);
-      }
-    },
-    [selected]
-  );
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     const [parent, child] = name.split(".");
@@ -48,30 +40,30 @@ export function Form({ handleEdit, onCloseSong }) {
       }));
     }
   };
-  function handleTheEdit(e) {
-    e.preventDefault();
-    const modified = songs.filter((song) => song.id !== selectedId);
-    const isListened = listened.map((song) => song.id).includes(selectedId);
-    const modifiedlistned = listened.filter((song) => song.id !== selectedId);
 
-    modified.unshift(value);
-    modifiedlistned.unshift(value);
-
-    dispatch(setSongs(modified));
-    dispatch(setQueryData(modified));
-    isListened && dispatch(setListened(modifiedlistned));
-    handleEdit();
+  if (redirectit) {
+    return <Navigate to="/" />;
   }
 
+  function handleCreate(e) {
+    e.preventDefault();
+    const modified = songs;
+    modified.unshift(value);
+    dispatch(setSongs(modified));
+    dispatch(setQueryData(modified));
+    setRedirect(true);
+  }
+  function handleBack() {
+    setRedirect(true);
+  }
   return (
     <>
-      {selected && (
-        <button className="btn-back" onClick={onCloseSong}>
-          &larr;
-        </button>
-      )}
+      <button className="btn-back" onClick={handleBack}>
+        &larr;
+      </button>
+
       <form className="formf">
-        {!selected && <h1> Create Song </h1>}
+        <h1> Create Song </h1>
         <label htmlFor="title" className="labelf">
           Title
         </label>
@@ -116,15 +108,13 @@ export function Form({ handleEdit, onCloseSong }) {
           value={value.preview}
           onChange={handleChange}
         />
-
-        <button className="btn-edit" type="submit" onClick={handleTheEdit}>
-          Edit
+        <button className="btn-edit" type="submit" onClick={handleCreate}>
+          Create
         </button>
       </form>
     </>
   );
 }
-Form.propTypes = {
-  handleEdit: PropTypes.func,
+CreateForm.propTypes = {
   onCloseSong: PropTypes.func,
 };

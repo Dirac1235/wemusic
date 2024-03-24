@@ -9,7 +9,7 @@ export default function Router(){
     const dispatch = useDispatch()
     useEffect(function () {
         dispatch(fetchUserRequest());
-        dispatch(setIsLoading(false));
+        
       }, []);
     return (
         <BrowserRouter>

@@ -48,7 +48,7 @@ export default function reduce(state = initialState, action) {
     case FETCH_USERS_REQUEST:
       return {
         ...state,
-        isLoading: true,
+        
       };
     case FETCH_USERS_SUCCESS:
       return {

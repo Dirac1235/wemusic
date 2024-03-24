@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   ListenedSongsList,
@@ -10,16 +10,9 @@ import { SongList } from "./components/songList";
 import { SongDetails } from "./components/songDetails";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setIsLoading,
-  setSelectedId,
-  setListened,
-  fetchUserRequest,
-} from "./components/redux/actions";
+import { setSelectedId, setListened } from "./components/redux/actions";
 import styled from "@emotion/styled";
 import { NotFound } from "./components/notFound";
-import { SummaryDiv, SummaryH } from "./components/emotionStyle/emotionStyle";
-import { Link } from "react-router-dom";
 
 export default function App() {
   const isLoading = useSelector((state) => state.isLoading);
@@ -63,13 +56,11 @@ export default function App() {
       </NavBar>
 
       <Main>
-        
         <Box>
           {!isLoading ? (
             !error ? (
               queryData && queryData.length > 0 ? (
                 <div className="songHolder">
-                  
                   <SongList
                     queryData={queryData}
                     onSelectSong={handleSelectSong}
@@ -131,8 +122,6 @@ function Main({ children }) {
 }
 
 function Box({ children }) {
-  const [isOpen, setIsOpen] = useState(true);
-
   return <div className="box">{children}</div>;
 }
 
