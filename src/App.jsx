@@ -19,6 +19,7 @@ import {
 import styled from "@emotion/styled";
 import { NotFound } from "./components/notFound";
 import { SummaryDiv, SummaryH } from "./components/emotionStyle/emotionStyle";
+import { Link } from "react-router-dom";
 
 export default function App() {
   const isLoading = useSelector((state) => state.isLoading);
@@ -54,11 +55,6 @@ export default function App() {
     [listened]
   );
 
-  useEffect(function () {
-    dispatch(fetchUserRequest());
-    dispatch(setIsLoading(false));
-  }, []);
-
   return (
     <>
       <NavBar>
@@ -67,15 +63,18 @@ export default function App() {
       </NavBar>
 
       <Main>
+        
         <Box>
-      
           {!isLoading ? (
             !error ? (
               queryData && queryData.length > 0 ? (
-                <SongList
-                  queryData={queryData}
-                  onSelectSong={handleSelectSong}
-                />
+                <div className="songHolder">
+                  
+                  <SongList
+                    queryData={queryData}
+                    onSelectSong={handleSelectSong}
+                  />
+                </div>
               ) : (
                 <NotFound />
               )

@@ -1,12 +1,21 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 export function SongList({ queryData, onSelectSong }) {
   return (
-    <ul className="list list-queryData">
-      {queryData?.map((song) => (
-        <Song song={song} key={song.id} onSelectSong={onSelectSong} />
-      ))}
-    </ul>
+    <>
+      <header className="songs">
+        <p>Songs</p>
+        <Link className="plus" to="/create">
+          +
+        </Link>
+      </header>
+      <ul className="list list-queryData list-songs">
+        {queryData?.map((song) => (
+          <Song song={song} key={song.id} onSelectSong={onSelectSong} />
+        ))}
+      </ul>
+    </>
   );
 }
 

@@ -81,8 +81,6 @@ function handlePrevClick() {
             <button className="btn-back" onClick={onCloseSong}>
               &larr;
             </button>
-
-            <DetailsOverview className="details-overview"></DetailsOverview>
           </header>
 
           <DetailsSection>
