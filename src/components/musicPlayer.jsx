@@ -15,13 +15,9 @@ export default function MusicPlayer({ song, onNextClick, onPrevClick }) {
     },
     [song.preview]
   );
-
   useEffect(() => {
-    console.log(songPlayed);
-
     const audio = songPlayed.current;
     audio?.load();
-
     const handleLoadedMetaData = () => {
       setDuration(audio.duration);
     };
@@ -29,29 +25,30 @@ export default function MusicPlayer({ song, onNextClick, onPrevClick }) {
     const handleTimeUpdate = () => {
       setCurrentTime(audio.currentTime);
     };
-
-    if (songUrl) {
-      audio?.addEventListener("loadedmetadata", handleLoadedMetaData);
-      audio?.addEventListener("timeupdate", handleTimeUpdate);
-
-      if (isPlaying) {
-        audio.play();
-      } else {
-        audio.pause();
-      }
-
-      return () => {
-        audio.removeEventListener("loadedmetadata", handleLoadedMetaData);
-        audio.removeEventListener("timeupdate", handleTimeUpdate);
-      };
+    audio?.addEventListener("loadedmetadata", handleLoadedMetaData);
+    audio?.addEventListener("timeupdate", handleTimeUpdate);
+  }, [songUrl]);
+  useEffect(() => {
+    const audio = songPlayed.current;
+    if (isPlaying) {
+      audio?.play();
+    } else {
+      audio?.pause();
     }
-  }, [songUrl, isPlaying]);
+  }, [isPlaying]);
 
   // Function to toggle play/pause
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
-
+  function secondsToTime(seconds) {
+    seconds = Math.floor(seconds);
+    var minutes = Math.floor(seconds / 60);
+    var remainingSeconds = seconds % 60;
+    return `${String(minutes).padStart(2, "0")}:${String(
+      remainingSeconds
+    ).padStart(2, "0")}`;
+  }
   return (
     <>
       <div id="boxes">
@@ -153,9 +150,11 @@ export default function MusicPlayer({ song, onNextClick, onPrevClick }) {
               />
               <div className="time">
                 <div className="total-time">
-                  {songPlayed?.current?.currentTime}
+                  {secondsToTime(songPlayed?.current?.currentTime)}
                 </div>
-                <div className="last-time">{songPlayed?.current?.duration}</div>
+                <div className="last-time">
+                  {secondsToTime(songPlayed?.current?.duration)}
+                </div>
               </div>
             </div>
           </div>

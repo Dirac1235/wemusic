@@ -92,6 +92,7 @@ export default function App() {
                 onDeleteListened={handleDeleteSong}
                 onCloseSong={handleCloseSong}
                 onAddListened={handleAddSong}
+                
               />
             </>
           )}

@@ -58,12 +58,23 @@ export function CreateForm() {
   }
   return (
     <>
-      <button className="btn-back" onClick={handleBack}>
+
+      <button className="btn-create-back" onClick={handleBack}>
         &larr;
       </button>
-
-      <form className="formf">
+      <form className=" create-form">
         <h1> Create Song </h1>
+        <label htmlFor="title" className="labelf">
+          ID
+        </label>
+        <input
+          className="inputf"
+          type="text"
+          name="id"
+          id="id"
+          value={value.id}
+          onChange={handleChange}
+        />
         <label htmlFor="title" className="labelf">
           Title
         </label>
@@ -108,6 +119,18 @@ export function CreateForm() {
           value={value.preview}
           onChange={handleChange}
         />
+        <label htmlFor="body" className="labelf">
+          Song Duration
+        </label>
+        <input
+          className="inputf"
+          type="text"
+          name="duration"
+          id="body"
+          value={value.duration}
+          onChange={handleChange}
+        />
+
         <button className="btn-edit" type="submit" onClick={handleCreate}>
           Create
         </button>

@@ -3,7 +3,7 @@ import App from "./App";
 import Create from "./components/create";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchUserRequest, setIsLoading } from "./components/redux/actions";
+import { fetchUserRequest } from "./components/redux/actions";
 
 export default function Router(){
     const dispatch = useDispatch()

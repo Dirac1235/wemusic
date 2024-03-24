@@ -100,7 +100,7 @@ body {
 }
 
 .list-listened {
-  height: calc(100% - 9rem);
+  margin-top: 0;
 }
 .list li {
   position: relative;
@@ -221,6 +221,7 @@ body {
   margin-bottom: 20px;
   font-size: 30px;
 }
+
 .inputf {
   font-size: 1.5rem;
   width: 90%;
@@ -242,6 +243,19 @@ body {
 }
 .btn-edit:hover {
   background-color: var(--color-primary-light);
+}
+.btn-create-back {
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-left: 2rem;
+  border-radius: 50%;
+  border: none;
+  background-color: #fff;
+  color: black;
+  box-shadow: 1px 1px 1px 1px rgba(157, 155, 157, 0.996);
+  font-size: 2rem;
+  cursor: pointer;
+  width: 4rem;
 }
 /* music player stylings */
 
@@ -369,4 +383,36 @@ body {
   text-decoration: none;
   font-size: 2.4rem;
   margin-left: 45rem;
+}
+.create-form {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  
+  width: 100%;
+  border: solid 1px rgb(212, 209, 209);
+  border-radius: 1rem;
+  max-width: 500px;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 20px;
+  box-shadow: 2px 2px 2px 2px rgba(79, 78, 79, 0.2);
+
+}
+.create-form h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.create-form .inputf {
+  font-size: 1.5rem;
+  width: 80%;
+  border-radius: 20px;
+  margin: 12px;
+  padding: 1rem;
+}
+.create-form .labelf {
+  height: 100%;
+  font-size: 1.5rem;
 }

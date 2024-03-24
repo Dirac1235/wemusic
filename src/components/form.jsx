@@ -14,6 +14,7 @@ export function Form({ handleEdit, onCloseSong }) {
     id: "",
     title: "",
     preview: "",
+    duration: "",
     artist: {
       name: "",
     },
@@ -50,7 +51,7 @@ export function Form({ handleEdit, onCloseSong }) {
   };
   function handleTheEdit(e) {
     e.preventDefault();
-    const modified = songs.filter((song) => song.id !== selectedId);
+    const modified  = songs.filter((song) => song.id !== selectedId);
     const isListened = listened.map((song) => song.id).includes(selectedId);
     const modifiedlistned = listened.filter((song) => song.id !== selectedId);
 
@@ -114,6 +115,17 @@ export function Form({ handleEdit, onCloseSong }) {
           name="preview"
           id="body"
           value={value.preview}
+          onChange={handleChange}
+        />
+        <label htmlFor="body" className="labelf">
+          Song Duration
+        </label>
+        <input
+          className="inputf"
+          type="text"
+          name="duration"
+          id="body"
+          value={value.duration}
           onChange={handleChange}
         />
 

@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import img from "../../images/pink.webp";
 import { useDispatch, useSelector } from "react-redux";
 import { SongDetails } from "./songDetails";
 import { setSelectedId } from "./redux/actions";
@@ -13,7 +12,7 @@ export function ListenedSongsList({
   const listened = useSelector((state) => state.listened);
 
   return (
-    <ul className="list">
+    <ul className="list list-listened">
       {listened.map((song) => (
         <ListenedSong
           song={song}
@@ -38,7 +37,7 @@ function ListenedSong({
   const selectedId = useSelector((state) => state.selectedId);
   const dispatch = useDispatch();
   return !selectedId ? (
-    <li>
+    <li className="list-listened">
       <button className="btn-delete" onClick={() => onDeleteListened(song.id)}>
         X
       </button>
