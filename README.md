@@ -13,6 +13,7 @@ We Music is a web application developed as part of the Addis Software Internship
 ## Technologies Used
 
 - React.js
+- React Router
 - Redux
 - Redux Saga
 - HTML/CSS
@@ -35,10 +36,14 @@ To run the We Music application locally, follow these steps:
     ```
     npm run dev
     ```
+## Deploy Link
 
+https://wemusic.netlify.app/  
 ## Usage
 
 - Upon loading the application, you will see a list of songs fetched from an external API.
-- To add a new song, click on the song and the details will be previewed on the right side of the page
+- To add a new song, click on the plus sign in song bar and write the details you want to add about the song you want to create and click on the "Create" button
+- To play the song click on the song from the song panel and it will appear on the right side of the window and click the play button
+- To add song to your listened song list click the "Add to list" button
 - To edit an existing song, click on the "Edit" button next to the song you wish to modify and update the details in the form.
 - Changes made to the songs will be reflected immediately in the UI and persisted in the application's state.
