@@ -251,7 +251,7 @@ body {
   font-size: 1.6rem;
   font-weight: 600;
   position: fixed;
-  width: 48%; /* Make the header full width */
+  width: 48.5%; /* Make the header full width */
   top: 12rem;
   left: 1.7rem;
   z-index: 1000;
