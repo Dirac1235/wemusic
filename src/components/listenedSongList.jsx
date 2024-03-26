@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { SongDetails } from "./songDetails";
 import { setSelectedId } from "./redux/actions";
-import { SummaryDiv, SummaryH } from "./emotionStyle/emotionStyle";
+import { DeleteButton, SummaryDiv, SummaryH } from "./emotionStyle/emotionStyle";
 
 export function ListenedSongsList({
   onDeleteListened,
@@ -38,9 +38,9 @@ function ListenedSong({
   const dispatch = useDispatch();
   return !selectedId ? (
     <li className="list-listened">
-      <button className="btn-delete" onClick={() => onDeleteListened(song.id)}>
+      <DeleteButton onClick={() => onDeleteListened(song.id)}>
         X
-      </button>
+      </DeleteButton>
       <img src={song?.album?.cover} alt={`${song.title} poster`} />
       <h3 onClick={() => dispatch(setSelectedId(song.id))}>{song.title}</h3>
       <div onClick={() => dispatch(setSelectedId(song.id))}>

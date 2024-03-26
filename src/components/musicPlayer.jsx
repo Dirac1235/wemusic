@@ -52,7 +52,7 @@ export default function MusicPlayer({ song, onNextClick, onPrevClick }) {
   return (
     <>
       <div id="boxes">
-        <div id="player02" className="player horizontal">
+        <div id="player02" className="player">
           <div className="wrapper">
             <div className="info-wrapper">
               <img src={song?.album?.cover} alt="LogoMusicImage" />

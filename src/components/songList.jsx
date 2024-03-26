@@ -30,7 +30,7 @@ function Song({ song, onSelectSong }) {
   }
   return (
     <li onClick={() => onSelectSong(song.id)}>
-      <img src={song.album.cover} alt={`${song.title} poster`} />
+      <img  src={song.album.cover} alt={`${song.title} poster`} />
       <h3 style={{ marginLeft: "20px" }}>{song.title}</h3>
       <div>
         <p>

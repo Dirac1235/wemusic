@@ -3,12 +3,11 @@ import { setQueryData, setSongs } from "./redux/actions";
 import { PropTypes } from "prop-types";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
+import { BackCButton, EditButton } from "./emotionStyle/emotionStyle";
 export function CreateForm() {
   const dispatch = useDispatch();
   const songs = useSelector((state) => state.songs);
-
   const [redirectit, setRedirect] = useState(false);
-
   const [value, setValue] = useState({
     id: "",
     title: "",
@@ -20,7 +19,7 @@ export function CreateForm() {
       cover: "",
     },
   });
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     const [parent, child] = name.split(".");
@@ -58,10 +57,9 @@ export function CreateForm() {
   }
   return (
     <>
-
-      <button className="btn-create-back" onClick={handleBack}>
+      <BackCButton  onClick={handleBack}>
         &larr;
-      </button>
+      </BackCButton>
       <form className=" create-form">
         <h1> Create Song </h1>
         <label htmlFor="title" className="labelf">
@@ -131,9 +129,9 @@ export function CreateForm() {
           onChange={handleChange}
         />
 
-        <button className="btn-edit" type="submit" onClick={handleCreate}>
+        <EditButton type="submit" onClick={handleCreate}>
           Create
-        </button>
+        </EditButton>
       </form>
     </>
   );

@@ -6,6 +6,8 @@ import {
   DetailsOverview,
   DetailsSection,
   DetailsDiv,
+  AddButton,
+  BackButton,
 } from "./emotionStyle/emotionStyle";
 import MusicPlayer from "./musicPlayer";
 import { setSelectedId } from "./redux/actions";
@@ -25,12 +27,12 @@ export function SongDetails({
   function handleNextClick() {
     const newId = getIndexById(songs, selectedId);
     dispatch(setSelectedId(songs[newId + 1].id));
-}
+  }
 
-function handlePrevClick() {
+  function handlePrevClick() {
     const newId = getIndexById(songs, selectedId);
     dispatch(setSelectedId(songs[newId - 1].id));
-}
+  }
   function getIndexById(array, id) {
     for (let i = 0; i < array.length; i++) {
       if (array[i].id === id) {
@@ -78,23 +80,22 @@ function handlePrevClick() {
       {!edit ? (
         <>
           <header>
-            <button className="btn-back" onClick={onCloseSong}>
+            <BackButton onClick={onCloseSong}>
               &larr;
-            </button>
+            </BackButton>
           </header>
 
           <DetailsSection>
-            <MusicPlayer song={song} onNextClick={handleNextClick} onPrevClick={handlePrevClick} />
-            <button
-              className="btn-add"
-              onClick={() => setEdit((prev) => !prev)}
-            >
-              Edit
-            </button>
+            <MusicPlayer
+              song={song}
+              onNextClick={handleNextClick}
+              onPrevClick={handlePrevClick}
+            />
+            <AddButton onClick={() => setEdit((prev) => !prev)}>Edit</AddButton>
             {!isListened && (
-              <button className="btn-add" onClick={handleAdd}>
+              <AddButton  onClick={handleAdd}>
                 + Add to list
-              </button>
+              </AddButton>
             )}
           </DetailsSection>
         </>

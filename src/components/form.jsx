@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setListened, setQueryData, setSongs } from "./redux/actions";
 import { PropTypes } from "prop-types";
+import { BackButton, EditButton } from "./emotionStyle/emotionStyle";
 export function Form({ handleEdit, onCloseSong }) {
   const dispatch = useDispatch();
   const songs = useSelector((state) => state.songs);
@@ -67,9 +68,9 @@ export function Form({ handleEdit, onCloseSong }) {
   return (
     <>
       {selected && (
-        <button className="btn-back" onClick={onCloseSong}>
+        <BackButton onClick={onCloseSong}>
           &larr;
-        </button>
+        </BackButton>
       )}
       <form className="formf">
         {!selected && <h1> Create Song </h1>}
@@ -129,9 +130,9 @@ export function Form({ handleEdit, onCloseSong }) {
           onChange={handleChange}
         />
 
-        <button className="btn-edit" type="submit" onClick={handleTheEdit}>
+        <EditButton type="submit" onClick={handleTheEdit}>
           Edit
-        </button>
+        </EditButton>
       </form>
     </>
   );

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSelectedId, setListened } from "./components/redux/actions";
 import styled from "@emotion/styled";
 import { NotFound } from "./components/notFound";
+import { Box } from "./components/emotionStyle/emotionStyle";
 
 export default function App() {
   const isLoading = useSelector((state) => state.isLoading);
@@ -122,17 +123,13 @@ function Main({ children }) {
   return <MainS>{children}</MainS>;
 }
 
-function Box({ children }) {
-  return <div className="box">{children}</div>;
-}
+
 
 Main.propTypes = {
   children: PropTypes.any,
 };
 
-Box.propTypes = {
-  children: PropTypes.any,
-};
+
 
 ErrorMessage.propTypes = {
   message: PropTypes.any,
